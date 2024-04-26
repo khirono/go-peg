@@ -1,0 +1,27 @@
+IPv6address <-
+	                              ( h16 ":" ){6} ls32 /
+	                         "::" ( h16 ":" ){5} ls32 /
+	(                 h16 )? "::" ( h16 ":" ){4} ls32 /
+ 	( ( h16 ":" ){,1} h16 )? "::" ( h16 ":" ){3} ls32 /
+	( ( h16 ":" ){,2} h16 )? "::" ( h16 ":" ){2} ls32 /
+	( ( h16 ":" ){,3} h16 )? "::"   h16 ":"      ls32 /
+	( ( h16 ":" ){,4} h16 )? "::"                ls32 /
+	( ( h16 ":" ){,5} h16 )? "::"                h16 /
+	( ( h16 ":" ){,6} h16 )? "::"
+
+h16 <- HEXDIG{1,4} !"."
+
+ls32 <- ( h16 ":" h16 ) / IPv4address
+
+IPv4address <- decOctet "." decOctet "." decOctet "." decOctet
+
+decOctet <-
+	"25" [0-5] /
+	"2" [0-4] DIGIT /
+	"1" DIGIT{2} /
+	[1-9] DIGIT /
+	DIGIT
+
+DIGIT <- [0-9]
+
+HEXDIG <- [0-9a-fA-F]
